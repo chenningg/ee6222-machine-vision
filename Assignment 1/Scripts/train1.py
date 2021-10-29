@@ -5,11 +5,13 @@ import h5py
 from option import option as op
 from tqdm import tqdm
 
-dataset_name = "wine"
+dataset_name = "abalone"
 
 # Read in data file
 temp = h5py.File("UCI data python\\" + dataset_name + "_R.mat")
 data = np.array(temp['data']).T
+
+print("Data shape:", data.shape)
 
 data = data[:, 1:]
 dataX = data[:, 0:-1]
@@ -242,8 +244,6 @@ for i in tqdm(range(4)):
     train_accuracy5, ACC_CV[4, i] = RVFL_train_val(trainX, trainY, testX, testY, option5)
     train_accuracy6, ACC_CV[5, i] = RVFL_train_val(trainX, trainY, testX, testY, option6)
 
-print(np.mean(ACC_CV, axis=0))
-print(np.var(ACC_CV, axis=0))
-print(np.mean(ACC_CV, axis=1))
-print(np.var(ACC_CV, axis=1))
-print(ACC_CV)
+print("Mean:", np.mean(ACC_CV, axis=1))
+print("Variance:", np.var(ACC_CV, axis=1))
+print("Full matrix:", ACC_CV)
