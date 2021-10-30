@@ -5,12 +5,13 @@ import h5py
 from option import option as op
 from tqdm import tqdm
 
-dataset_name = "abalone"
+dataset_name = "dermatology"
 
 # Read in data file
 temp = h5py.File("UCI data python\\" + dataset_name + "_R.mat")
 data = np.array(temp['data']).T
 
+print("Dataset:", dataset_name)
 print("Data shape:", data.shape)
 
 data = data[:, 1:]
