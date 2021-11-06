@@ -4,8 +4,9 @@ from function import RVFL_train_val
 import h5py
 from option import option as op
 from tqdm import tqdm
+import csv
 
-dataset_name = "dermatology"
+dataset_name = "titanic"
 
 # Read in data file
 temp = h5py.File("UCI data python\\" + dataset_name + "_R.mat")
@@ -245,6 +246,14 @@ for i in tqdm(range(4)):
     train_accuracy5, ACC_CV[4, i] = RVFL_train_val(trainX, trainY, testX, testY, option5)
     train_accuracy6, ACC_CV[5, i] = RVFL_train_val(trainX, trainY, testX, testY, option6)
 
-print("Mean:", np.mean(ACC_CV, axis=1))
-print("Variance:", np.var(ACC_CV, axis=1))
-print("Full matrix:", ACC_CV)
+with open("results.csv", "w", newline="") as results_file:
+    spamwriter = csv.writer(results_file)
+    spamwriter.writerow(np.mean(ACC_CV, axis=1))
+    spamwriter.writerow(np.var(ACC_CV, axis=1))
+
+    for result in ACC_CV:
+        spamwriter.writerow(result)
+
+    print("Mean:", np.mean(ACC_CV, axis=1))
+    print("Variance:", np.var(ACC_CV, axis=1))
+    print("Full matrix:", ACC_CV)
